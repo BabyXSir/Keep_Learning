@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .board {
+      width: 400px;
+      height: 400px;
+      margin: 20px;
+      position: relative;
+      background-color: cadetblue;
+    }
+
+    .unit {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background-color: bisque;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="board">
+    <div class="unit"></div>
+  </div>
+
+  <script>
+    let mapWidth = 20;// 地图大小20*20;单位unitWidth;
+    let unitWidth = 20;// 单元大小；单位px；
+    let snake = [mapWidth + 2, mapWidth + 3, mapWidth + 4,]// 小蛇单元坐标用数字表示
+    let speed = 70;// 速度
+    let toDirection = 'right';// 方向：up\down\left\right
+    let direction = 'right';// 方向：up\down\left\right
+    let start = false;// 游戏是否开始
+    let board = document.getElementsByClassName("board")[0];
+
+    render(snake)
+
+    // 键盘事件
+    let keyMap = { 119: 'up', 115: 'down', 97: 'left', 100: 'right' }
+    document.onkeypress = function (e) {
+      toDirection = keyMap[e.keyCode] || toDirection
+      if (!start) runGame();
+    }
+
+    // 创建新果实
+    let food = createFood();
+    function createFood() {
+      let index = Math.floor(20 * 20 * Math.random());
+      if (snake.indexOf(index) != -1) return createFood();
+      return index;
+    }
+
+    // 游戏执行
+    let gameRunner;
+    let reverseDirectionMap = { 'up': 'down', 'down': 'up', 'left': 'right', 'right': 'left', }
+    let directionMoveMap = { up: -mapWidth, down: mapWidth, left: -1, right: 1 }
+    function runGame() {
+      snake = [mapWidth + 2, mapWidth + 3, mapWidth + 4,]// 小蛇单元坐标用数字表示
+      direction = "right"
+      toDirection = "right"
+      start = true;
+      gameRunner = setInterval(() => {
+
+        // 下一个新生单元
+        direction = reverseDirectionMap[direction] == toDirection ? direction : toDirection
+        let nextUnit = snake[snake.length - 1] + directionMoveMap[direction]
+        // 判断输没
+        if (judgeFail() || snake.indexOf(nextUnit) != -1) {
+          clearInterval(gameRunner);
+          gameRunner = null;
+          start = false;
+          return alert("GOOD GAME!");
+        }
+
+        if (nextUnit == food) {
+          food = createFood();
+          console.log(`food`, food)
+        } else {
+          // 如果下一个不是食物，则删除第一个单元
+          snake.splice(0, 1);
+        }
+        // 添加新坐标
+        snake.push(snake[snake.length - 1] + directionMoveMap[direction]);
+        console.log(`snake`, snake)
+        // 渲染
+        render([food, ...snake]);
+      }, speed)
+    }
+    // 判断输没
+    function judgeFail() {
+      if (snake[snake.length - 1] % mapWidth == 0 && direction == 'right') return true;
+      if (snake[snake.length - 1] % mapWidth == 1 && direction == 'left') return true;
+      if (snake[snake.length - 1] / mapWidth < 1 && direction == 'up') return true;
+      if (snake[snake.length - 1] / mapWidth > 19 && direction == 'down') return true;
+    }
+    // 渲染
+    function render(arr) {
+      board.innerHTML = arr.reduce((res, item) => res + `<div class="unit" style="left:${(item - 1) % mapWidth * unitWidth}px;top:${Math.floor((item - 1) / mapWidth) * unitWidth}px;"></div>`, '')
+    }
+
+
+    // plan2: 可以通过记录要新增的单元和要消失的单元位置，进而完成小蛇的变化
+  </script>
+</body>
+
+</html>

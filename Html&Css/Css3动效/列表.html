@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list1 {
+      margin: 30px auto;
+      width: 280px;
+      border: 1px solid #eee;
+      padding: 30px 0;
+      border-radius: 5px;
+      position: relative;
+    }
+    .list1::before {
+      content: "List1";
+      display: block;
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      font-size: 16px;
+      color: #c4c4c4;
+      font-weight: 200;
+    }
+
+    .list1 .item {
+      padding: 10px;
+      box-sizing: border-box;
+      height: 50px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .list1 .item .text {
+      width: 100%;
+      height: 100%;
+      line-height: 30px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .list1 .item .left-triangle,
+    .list1 .item .right-triangle {
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 10px;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      display: none;
+    }
+
+    .list1 .item .left-triangle {
+      border-left-color: rgb(49, 155, 255);
+      left: 10px;
+    }
+    @keyframes leftToRight {
+      0% {
+      animation-timing-function: linear;
+      }
+      50% {
+        left: 50%;
+      animation-timing-function: linear;
+      }
+      100% {
+        left: 230px;
+      }
+    }
+    .list1 .item.active .left-triangle {
+      animation: leftToRight .25s;
+      animation-fill-mode: forwards;
+    }
+
+    .list1 .item .right-triangle {
+      border-right-color: rgb(49, 155, 255);
+      right: 10px;
+    }
+    @keyframes rightToLeft {
+      0% {
+      animation-timing-function: linear;
+      }
+      50% {
+        right: 50%;
+      animation-timing-function: linear;
+      }
+      100% {
+        right: 230px;
+      }
+      
+    }
+
+    .list1 .item.active .right-triangle {
+      animation: rightToLeft .25s;
+      animation-fill-mode: forwards;
+    }
+
+    .list1 .item:hover .left-triangle,
+    .list1 .item:hover .right-triangle {
+      display: block;
+    }
+
+    .list1 .item.active .left-triangle,
+    .list1 .item.active .right-triangle {
+      display: block;
+    }
+
+    .list1 .item .cover-text {
+      display: inline-block;
+      height: 30px;
+      width: 0px;
+      overflow: hidden;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      background-color:  rgb(49, 155, 255);
+      color: #fff;
+    }
+    .list1 .item .cover-text .inner {
+      width: 250px;
+      height: 30px;
+      box-sizing: border-box;
+      line-height: 30px;
+      font-size: 24px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      color: #fff;
+      text-align: center;
+      z-index: 100;
+    }
+    @keyframes fontUnfold {
+      0% {
+        width: 0px;
+      }
+      50% {
+        width: 0px;
+      }
+      100% {
+        width: 181px;
+      }
+    }
+    .list1 .item.active .cover-text {
+      animation: fontUnfold .25s;
+      animation-fill-mode: forwards;
+      animation-timing-function: linear;
+    }
+
+
+
+
+
+
+    .list2 {
+      margin: 30px auto;
+      width: 280px;
+      border: 1px solid #eee;
+      padding: 30px 0;
+      border-radius: 5px;
+      position: relative;
+    }
+    .list2::before {
+      content: "List2";
+      display: block;
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      font-size: 16px;
+      color: #c4c4c4;
+      font-weight: 200;
+    }
+
+    .list2 .item {
+      padding: 10px;
+      box-sizing: border-box;
+      height: 50px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .list2 .item .text {
+      width: 100%;
+      height: 100%;
+      line-height: 30px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .list2 .item .left-triangle,
+    .list2 .item .right-triangle {
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 10px;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+
+    .list2 .item .left-triangle {
+      border-left-color: rgb(115, 238, 238);
+      left: 10px;
+    }
+
+    .list2 .item .right-triangle {
+      border-right-color:  rgb(115, 238, 238);
+      right: 10px;
+    }
+    @keyframes rightToLeft {
+      0% {
+      animation-timing-function: linear;
+      }
+      50% {
+        right: 50%;
+      animation-timing-function: linear;
+      }
+      100% {
+        right: 230px;
+      }
+    }
+    @keyframes leftToRight {
+      0% {
+      animation-timing-function: linear;
+      }
+      50% {
+        left: 50%;
+      animation-timing-function: linear;
+      }
+      100% {
+        left: 230px;
+      }
+    }
+
+    .list2 .item:hover .left-triangle
+  {
+      animation: leftToRight .25s;
+      animation-fill-mode: forwards;
+    }
+    .list2 .item:hover .right-triangle {
+      animation: rightToLeft .25s;
+      animation-fill-mode: forwards;
+    }
+
+    .list2 .item .cover-text {
+      display: inline-block;
+      height: 30px;
+      width: 0px;
+      overflow: hidden;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      background-color:   rgb(115, 238, 238);
+      color: #fff;
+      transition: .25s linear;
+    }
+    .list2 .item .cover-text .inner {
+      width: 250px;
+      height: 30px;
+      box-sizing: border-box;
+      line-height: 30px;
+      font-size: 16px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      color: #fff;
+      text-align: center;
+      z-index: 100;
+    }
+    @keyframes fontUnfold {
+      0% {
+        width: 0px;
+      }
+      50% {
+        width: 0px;
+      }
+      100% {
+        width: 181px;
+      }
+    }
+
+    .list2 .item:hover .cover-text {
+      animation: fontUnfold .25s;
+      animation-fill-mode: forwards;
+      animation-timing-function: linear;
+      transition: .25s linear;
+      /* animation-play-state: paused; */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- list1 -->
+  <ul class="list1">
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">HTML</div>
+      <div class="cover-text">
+        <div class="inner">
+          HTML
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">CSS</div>
+      <div class="cover-text">
+        <div class="inner">
+          CSS
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">Javascript</div>
+      <div class="cover-text">
+        <div class="inner">
+          Javascript </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">Vue</div>
+      <div class="cover-text">
+        <div class="inner">
+          Vue
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">React</div>
+      <div class="cover-text">
+        <div class="inner">
+          React
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+  </ul>
+
+
+  <!-- list2 -->
+  <ul class="list2">
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">HTML</div>
+      <div class="cover-text">
+        <div class="inner">
+          一个简单的CSS3 DEMO
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">CSS</div>
+      <div class="cover-text">
+        <div class="inner">
+          不会吧 不会吧
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">Javascript</div>
+      <div class="cover-text">
+        <div class="inner">
+          不会真的有人 
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">Vue</div>
+      <div class="cover-text">
+        <div class="inner">
+          连这么简单的DEMO
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+    <li class="item">
+      <div class="left-triangle"></div>
+      <div class="text">React</div>
+      <div class="cover-text">
+        <div class="inner">
+          都写不出来吧
+        </div>
+      </div>
+      <div class="right-triangle"></div>
+    </li>
+  </ul>
+
+
+  <script>
+    let listItems = document.querySelectorAll(".list1 .item")
+    listItems.forEach(item => {
+      item.onclick = function () {
+        listItems.forEach(item2 => item2.classList.remove("active"))
+        item.classList.add("active")
+      }
+    })
+  </script>
+</body>
+
+</html>

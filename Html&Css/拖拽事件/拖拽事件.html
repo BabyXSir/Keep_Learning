@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+    }
+
+    .block {
+      width: 100px;
+      height: 100px;
+      left: 25px;
+      top: 25px;
+      position: relative;
+      border-radius: 10px;
+      background-color: aquamarine;
+    }
+
+    .mask {
+      width: 50%;
+      height: 50%;
+      position: absolute;
+      left: 25%;
+      top: 25%;
+      z-index: 100;
+      background-color: rgba(128, 128, 128, 0.534);
+    }
+  </style>
+</head>
+
+<body>
+  <div draggable="true" class="block"></div>
+  <div class="mask"></div>
+
+  <script>
+    let block = document.getElementsByClassName("block")[0];
+    let isDrag = false;
+
+    let diffX,diffY;
+    block.ondragstart = function (e) {
+      diffX = e.pageX-e.target.offsetLeft;
+      diffY = e.pageY-e.target.offsetTop;
+      document.body.style.cursor = "grab"
+     };
+    block.ondrag = function (e) {
+      document.body.style.cursor = "grab"
+      e.target.style.cursor = "grabing"
+      // block.style.left = e.clientX +'px'
+      // block.style.top = e.clientY +'px'
+    }
+    block.ondragend = function (e) { 
+      e.target.style.cursor = "grab"
+      block.style.left = e.clientX -diffX  +'px'
+      block.style.top = e.clientY -diffY+'px'
+
+    }
+
+  </script>
+</body>
+
+</html>

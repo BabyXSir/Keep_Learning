@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .outer {
+      width: 500px;
+      background-color: #f3f3f3;
+      margin: 0 auto;
+      min-height: 100%;
+    }
+
+    .input {
+      width: 100%;
+      background-color: #fff;
+      font-size: 20px;
+      padding: 15px;
+      box-sizing: border-box;
+      border-radius: 99px;
+    }
+
+    ul {
+      width: 100%;
+    }
+
+    li {
+      width: 100%;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 20px;
+      border-top: 1px solid;
+    }
+    li:first-child {
+      border-top: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outer">
+    <input type="text" class="input" placeholder="请输入您要搜索的内容">
+    <!-- *** 节流 *** -->
+    <ul class="keywords-related">
+      <li>123</li>
+      <li>123</li>
+    </ul>
+  </div>
+
+  <script>
+    const input = document.getElementsByClassName("input")[0];
+    const list = document.getElementsByClassName("keywords-related")[0]
+
+    // *** 防抖 ***
+    let refreshTimer;
+    input.addEventListener("input", function (e) {
+      clearTimeout(refreshTimer);
+      refreshTimer = null;
+      refreshTimer = setTimeout(() => {
+        console.log(`111`, 111)
+        // jsonp解决跨域
+        //创建标签(createElement)
+        var script = document.createElement("script");
+        //添加地址
+        script.src = "https://www.baidu.com/sugrec?prod=pc&wd=" + e.target.value + '&cb=callbackFn';
+        //添加给body的(成为body包涵的孩子)
+        document.body.appendChild(script);
+      }, 500)
+
+    })
+
+    function callbackFn(res) {
+      let listItems = document.querySelectorAll(".keywords-related li")
+      // 删除所有li元素
+      listItems.forEach(item => list.removeChild(item))
+
+      if (res.g) {
+        // 添加元素
+        res.g.forEach(item => {
+          let li = document.createElement("li");
+          li.innerText = item.q;
+          list.appendChild(li)
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

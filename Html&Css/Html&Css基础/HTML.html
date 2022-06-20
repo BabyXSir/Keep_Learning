@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HTML标签学习</title>
+  <meta name="charset" content="uft-8">
+  <meta http-equiv="refresh" content="1000">
+  <base href="http://www.baidu.com/">
+  <base target="_blank">
+  <link rel="stylesheet" href="./CSS.css">
+  <style>
+    body {
+      counter-reset: section;
+    }
+
+    .title {
+      counter-increment: section;
+      font-size: counter(section);
+    }
+  </style>
+  <script></script>
+</head>
+
+<body>
+  <header>
+    <h1 class="title">h1标签</h1>
+    <h2 class="title">h2标签</h2>
+    <h3 class="title">h3标签</h3>
+  </header>
+  <section>
+    <p>p标签</p>
+    <a href="" target="_blank">a标签</a>
+  </section>
+</body>
+
+</html>

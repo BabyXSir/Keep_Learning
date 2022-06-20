@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button onclick="add()">添加一条数据</button>
+
+  <script>
+    let request = window.indexedDB.open('txt');
+    let id = 0;
+    var db;
+
+    request.onerror = err => {
+      console.log(`onerror`, err)
+    }
+    request.onsuccess = e => {
+      // console.log(`onsuccess`, e)
+    }
+    request.onupgradeneeded = e => {
+      console.log(`onupgradeneeded`, e)
+      // 0.建立连接
+      db = e.target.result;
+
+      // store1: createIndex
+      var store1 = db.createObjectStore("store1", { keyPath: "ssn" })
+      store1.createIndex("i", "i", { unique: true });
+      store1.transaction.oncomplete = function (event) {
+        // let objStore = db.transaction("newStore","readWrite")
+        console.log(`complete`, event)
+      }
+
+      // store2: autoIncrement、CRUD
+      var store2 = db.createObjectStore("store2", {keyPath:"id"})
+
+      store2.add({id:++id,name:"name1"})
+      store2.add({id:++id,name:"name2"})
+      // let res = store2.get(1);
+      // console.log(`res`, res)
+      // res.value = "res"
+      // let resUpdate = store2.put(res)
+      // console.log(`resUpdate`, resUpdate)
+    }
+
+    function add() {
+      // db.add({ id: id++, name: "new test data" })
+      var objectStore = db.transaction(["store2"], "readwrite").objectStore("store2");
+
+      // 1.获取
+      var res = objectStore.get(1);
+      console.log(`1.获取`, res)
+      // 2.删除
+      objectStore.delete(1)
+      var res = objectStore.get(1);
+      console.log(` 2.删除`, res)
+      // 3.增加
+      objectStore.add({id:++id,name:"name333"})
+      var res = objectStore.get(3);
+      console.log(`3.增加`, res)
+      // 4.更改
+      objectStore.put({id:2,name:"update_name"})
+      var res = objectStore.get({id:2});
+      console.log(`4.更改`, res)
+    }
+
+  </script>
+</body>
+
+</html>

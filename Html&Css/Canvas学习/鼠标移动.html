@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    canvas {
+      margin: 10px;
+      border: 1px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="canvas" width="1000" height="800"></canvas>
+
+  <script>
+    let canvas = document.getElementById("canvas")
+    let ctx = canvas.getContext("2d")
+    let circleArr = [];
+
+    class Circle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.rx = parseInt(5 - Math.random() * 12); // 随机x
+        this.ry = parseInt(5 - Math.random() * 12); // 随机y
+        this.r = 30; // 半径
+        this.opacity = 1; // 透明度
+        // this.color = `rgb(${parseInt(Math.random() * 255)},${parseInt(Math.random() * 255)},${parseInt(Math.random() * 255)},${this.opacity})`
+        this.color = `rgb(${parseInt(Math.random() * 240) + 9},${parseInt(Math.random() * 220) + 18},${203},${this.opacity})`
+
+        circleArr.push(this)
+      }
+
+      render() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+        ctx.fill();
+      }
+
+      update() {
+        this.x = this.x += this.rx;
+        this.y = this.y += this.ry;
+        this.r -= 1;
+      }
+    }
+
+    canvas.addEventListener("mousemove", function (e) {
+      new Circle(e.x - 10, e.y - 10)
+    })
+
+    setInterval(() => {
+      // 清屏
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // 渲染更新
+      for (var i = 0; i < circleArr.length; i++) {
+        if (circleArr[i].r <= 0) {
+          circleArr.splice(i, 1);
+          i--;
+          continue;
+        }
+        circleArr[i].update();
+        circleArr[i].render();
+      }
+    }, 20)
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    let a = 4;
+    let b = 5;
+
+    function add(a, b) {
+      if (a + b >= 10) {
+        return a + b;
+      } else {
+        return add(a + b, b)
+      }
+    }
+    console.log(1);
+    // debugger 只能在浏览器中被解析，node环境没有效果
+    debugger;
+    console.log(add(a, b));
+  </script>
+</body>
+
+</html>
